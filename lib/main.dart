@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:device_preview/device_preview.dart';
+//import 'package:device_preview/device_preview.dart';
 import 'package:purscliq_app/homepage.dart';
 
 void main() {
-  runApp(DevicePreview(
-    enabled: true,
-    builder: (context) => const MyApp(),
-  ));
+  runApp(
+    // DevicePreview
+    // (
+    // enabled: false,
+    // builder: (context) =>
+    const MyApp(),
+    //)
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,12 +22,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -33,6 +37,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Homepage();
+    return const Homepage();
   }
 }
