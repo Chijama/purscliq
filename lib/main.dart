@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 //import 'package:device_preview/device_preview.dart';
 import 'package:purscliq_app/homepage.dart';
+import 'package:purscliq_app/login.dart';
 
 void main() {
   runApp(
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      home: const LoginPage(),
     );
   }
 }
