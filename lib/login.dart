@@ -85,7 +85,8 @@ class _LoginPageState extends State<LoginPage> {
                               child: Text(
                                 "Forgot Password?",
                                 style: kBlue1TextStyle.copyWith(
-                                    color: const Color.fromARGB(255, 49, 128, 231)),
+                                    color: const Color.fromARGB(
+                                        255, 49, 128, 231)),
                               ))
                         ],
                       ),
@@ -102,7 +103,25 @@ class _LoginPageState extends State<LoginPage> {
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white,
                                 fontSize: 16),
-                          ))
+                          )),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Don’t have account yet?',
+                            style: kBlue1TextStyle,gi
+                          ),
+                          TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                "Sign Up",
+                                style: kBlue1TextStyle.copyWith(
+                                    color: const Color.fromARGB(
+                                        255, 49, 128, 231)),
+                              ))
+                        ],
+                      )
                     ],
                   ),
                 ),
