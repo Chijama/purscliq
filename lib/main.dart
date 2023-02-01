@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 //import 'package:device_preview/device_preview.dart';
-import 'package:purscliq_app/homepage.dart';
 import 'package:purscliq_app/login.dart';
 
 void main() {
@@ -25,19 +24,5 @@ class MyApp extends StatelessWidget {
       ),
       home: const LoginPage(),
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return const Homepage();
   }
 }

@@ -12,8 +12,6 @@ class Homepage extends StatefulWidget {
   State<Homepage> createState() => _HomepageState();
 }
 
-
-
 class _HomepageState extends State<Homepage> {
   bool _switchValue = false;
 
@@ -26,7 +24,7 @@ class _HomepageState extends State<Homepage> {
     String formattedTime = DateFormat.jms().format(now);
     final width = MediaQuery.of(context).size.width;
     int selectecIndex = 0;
-    void _onItemTapped(int index) {
+    void onItemTapped(int index) {
       setState(() {
         selectecIndex = index;
       });
@@ -36,7 +34,7 @@ class _HomepageState extends State<Homepage> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         currentIndex: selectecIndex,
-        onTap: _onItemTapped,
+        onTap: onItemTapped,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.house),
@@ -227,7 +225,7 @@ class _HomepageState extends State<Homepage> {
                             ],
                           ),
                         )
-                      : Padding(
+                      : Container(
                           padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
                           child: Column(
                             children: [
@@ -331,14 +329,14 @@ class _HomepageState extends State<Homepage> {
                           transType: "Airtime USSD",
                           transAmount: "+ \$30.21",
                           transName: "NUWD2392002003",
-                          statusStyle: kGreentatusTextStyle),
+                          statusStyle: kGreenStatusTextStyle),
                       CustTransactions(
                           formattedDate: formattedDate,
                           formattedTime: formattedTime,
                           transType: "Airtime USSD",
                           transAmount: "+ \$30.21",
                           transName: "NUWD2392002003",
-                          statusStyle: kGreentatusTextStyle),
+                          statusStyle: kGreenStatusTextStyle),
                     ],
                   ))
                 ],
@@ -352,7 +350,7 @@ class _HomepageState extends State<Homepage> {
 }
 
 class CustTransactions extends StatelessWidget {
-  CustTransactions({
+  const CustTransactions({
     Key? key,
     required this.formattedDate,
     required this.formattedTime,
@@ -368,7 +366,7 @@ class CustTransactions extends StatelessWidget {
   final String transAmount;
   final String transName;
   final TextStyle? statusStyle;
-  int? currentIndex = 0;
+  final int? currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {

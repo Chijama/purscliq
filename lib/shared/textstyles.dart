@@ -52,8 +52,20 @@ TextStyle kRedStatusTextStyle = GoogleFonts.khula(
   color: const Color.fromARGB(255, 220, 68, 55),
 );
 
-TextStyle kGreentatusTextStyle = GoogleFonts.khula(
+TextStyle kGreenStatusTextStyle = GoogleFonts.khula(
   fontSize: 16,
   fontWeight: FontWeight.w600,
   color: const Color.fromARGB(255, 81, 158, 71),
+);
+
+TextStyle kAlertTitleTextStyle = GoogleFonts.lato(
+  fontSize: 20,
+  fontWeight: FontWeight.w900,
+  color: const Color.fromARGB(255, 24, 45, 77),
+);
+
+TextStyle kAlertContentTextStyle = GoogleFonts.lato(
+  fontSize: 14,
+  fontWeight: FontWeight.w400,
+  color: const Color.fromARGB(255, 144, 149, 160),
 );
