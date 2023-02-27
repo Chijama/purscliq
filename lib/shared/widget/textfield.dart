@@ -5,10 +5,13 @@ import 'package:purscliq_app/shared/textstyles.dart';
 class TextForm extends StatelessWidget {
   String text;
   final String hintText;
-  final TextEditingController controller ;
+  final TextEditingController controller;
   final bool obscureText;
-  TextForm(this.text, this.hintText, this.controller, this.obscureText,{super.key});
   
+  TextForm(this.text, this.hintText, this.controller, this.obscureText,
+      this.suffixWidget,
+      {super.key});
+  Widget suffixWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +24,12 @@ class TextForm extends StatelessWidget {
           style: kBlack3TextStyle,
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(0, 4, 0, 14),
-          child: TextField(
-            controller: controller ,
-            obscureText: obscureText ,
+          padding: const EdgeInsets.fromLTRB(0, 4, 0, 12),
+          child: TextFormField(
+              controller: controller,
+              obscureText: obscureText,
               decoration: InputDecoration(
+                  suffixIcon: suffixWidget,
                   border: OutlineInputBorder(
                     borderRadius: const BorderRadius.all(Radius.circular(4)),
                     borderSide:

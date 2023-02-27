@@ -1,8 +1,11 @@
+import 'dart:convert';
+import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
-import 'package:purscliq_app/homepage.dart';
+import 'package:purscliq_app/Login/login_provider.dart';
+import 'package:purscliq_app/Homepage/homepage.dart';
 import 'package:purscliq_app/shared/textstyles.dart';
 import 'package:purscliq_app/shared/widget/textfield.dart';
 
@@ -25,6 +28,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future login() async {
+    var state = Provider.of<LoginProvider>(context, listen: false);
     showDialog(
         context: context,
         builder: (context) => SizedBox(
@@ -50,8 +54,14 @@ class _LoginPageState extends State<LoginPage> {
       Uri.parse("https://api305.purscliq.com/api/login"),
       body: body,
     );
+    print(json.decode(r.body)['data']['token']);
+    String token = json.decode(r.body)['data']['token'];
+    // json.decode(r.body)['data']['token'];
+    state.getToken(token);
+
     if (r.statusCode == 200) {
       if (!mounted) return;
+
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Homepage()),
@@ -106,7 +116,8 @@ class _LoginPageState extends State<LoginPage> {
             );
           });
     } else if (r.statusCode == 302) {
-      if (!mounted) return; Navigator.pop(context);
+      if (!mounted) return;
+      Navigator.pop(context);
 
       showDialog(
           context: context,
@@ -201,14 +212,10 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.fromLTRB(12, 20, 24, 25),
                   child: Column(
                     children: [
-                      TextForm(
-                        "User ID",
-                        'Enter User ID',
-                        emailController,
-                        false,
-                      ),
+                      TextForm("User ID", 'Enter User ID', emailController,
+                          false, SizedBox()),
                       TextForm('Password', 'Enter Password', passwordController,
-                          true),
+                          true, SizedBox()),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

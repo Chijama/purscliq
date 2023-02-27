@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 //import 'package:device_preview/device_preview.dart';
-import 'package:purscliq_app/login.dart';
+import 'package:purscliq_app/Login/login.dart';
+import 'package:purscliq_app/Login/login_provider.dart';
+import 'package:purscliq_app/returning.dart';
 
 void main() {
-  runApp(
-    // DevicePreview
-    // (
-    // enabled: false,
-    // builder: (context) =>
-    const MyApp(),
-    //)
-  );
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (context) => LoginProvider(),
+      )
+    ],
+    child: const MyApp(),
+  )
+      // DevicePreview
+      // (
+      // enabled: false,
+      // builder: (context) =>
+
+      //)
+      );
 }
 
 class MyApp extends StatelessWidget {
@@ -22,7 +32,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoginPage(),
+      // home: const LoginPage(),
+      home: LoginPage(),
     );
   }
 }
