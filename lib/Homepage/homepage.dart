@@ -1,13 +1,14 @@
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter/material.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:purscliq_app/Homepage/user_data.dart';
-import 'package:purscliq_app/service.dart';
-import 'package:purscliq_app/shared/textstyles.dart';
+
+import '../service.dart';
+import '../shared/textstyles.dart';
+import 'user_data_model.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -30,6 +31,20 @@ class _HomepageState extends State<Homepage> {
   getData() async {
     userData = Service().getUserData();
     setState(() {});
+  }
+
+  String capitalize(String value) {
+    var result = value[0].toUpperCase();
+    bool cap = true;
+    for (int i = 1; i < value.length; i++) {
+      if (value[i - 1] == " " && cap == true) {
+        result = result + value[i].toUpperCase();
+      } else {
+        result = result + value[i];
+        cap = false;
+      }
+    }
+    return result;
   }
 
   @override
@@ -71,314 +86,319 @@ class _HomepageState extends State<Homepage> {
         child: FutureBuilder<UserDataModel?>(
           future: userData,
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting)
-              return Center(child: const CircularProgressIndicator());
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
             if (snapshot.hasData) {
               if (snapshot.data == null) {
                 return const Text("Empty");
               }
             }
+            Fdata? sFdata = snapshot.data?.fdata;
+            String? firstName = capitalize((snapshot.data?.fdata?.firstName)!);
             log("${snapshot.data}");
-            return Column(
-              children: <Widget>[
-                Container(
-                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                  height: 220,
-                  width: width,
-                  color: Colors.grey.shade100,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      const SizedBox(
-                        height: 35,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Hello ${snapshot.data?.data?.firstName}",
-                            style: kHeading1TextStyle,
+            return SafeArea(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    height: 220,
+                    width: width,
+                    color: Colors.grey.shade100,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Hello $firstName" ?? "User",
+                              style: kHeading1TextStyle,
+                            ),
+                            IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.notification_add,
+                                  color: Theme.of(context).primaryColor,
+                                ))
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          children: [
+                            Text("Savings Account - ",
+                                style: kHeading2TextStyle),
+                            Text("${sFdata?.wallet?.accNo}" ?? "90324531823",
+                                style: kHeading2TextStyle.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ))
+                          ],
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 15),
+                          child: Divider(
+                            color: Colors.grey.shade400,
+                            thickness: 0.5,
                           ),
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.notification_add,
-                                color: Theme.of(context).primaryColor,
-                              ))
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        children: [
-                          Text("Savings Account - ", style: kHeading2TextStyle),
-                          Text("90324531823",
-                              style: kHeading2TextStyle.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ))
-                        ],
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 15),
-                        child: Divider(
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _switchValue != true
+                                ? Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Icon(
+                                        Icons.wallet,
+                                        size: 30,
+                                        color: Colors.grey.shade500,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "₦ ${sFdata?.wallet?.amt}" ??
+                                            "₦5,000,000.00",
+                                        style: kHeading1TextStyle,
+                                      )
+                                    ],
+                                  )
+                                : Material(
+                                    elevation: 10,
+                                    child: Container(
+                                      height: 30,
+                                      width: 72,
+                                      padding: const EdgeInsets.all(4),
+                                      decoration: const BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(30))),
+                                      child: const Text("₦****.**"),
+                                    ),
+                                  ),
+                            Row(
+                              // crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  _switchValue != true ? "Show" : "Hide",
+                                  style: kHeading2TextStyle.copyWith(
+                                      fontSize: 14,
+                                      color: const Color.fromARGB(
+                                          255, 95, 115, 140)),
+                                ),
+                                Transform.scale(
+                                  scale: 0.8,
+                                  child: CupertinoSwitch(
+                                    value: _switchValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _switchValue = value;
+                                      });
+                                    },
+                                    activeColor: Colors.blue,
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const CustDotIndicator(
+                          count: 4,
+                          custMaiN: MainAxisAlignment.start,
+                          custCross: CrossAxisAlignment.start,
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    child: Column(
+                      //crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 6),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(""),
+                            TextButton(
+                              onPressed: () {
+                                if (seeAll == true) {
+                                  setState(() {
+                                    seeAll = false;
+                                  });
+                                } else {
+                                  setState(() {
+                                    seeAll = true;
+                                  });
+                                }
+                              },
+                              child: Text(
+                                seeAll == true ? 'See all' : 'Hide',
+                                style: kHeading2TextStyle.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        seeAll == true
+                            ? Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: const [
+                                    CustomMainIcon(
+                                        FontAwesomeIcons.arrowRightArrowLeft,
+                                        "Send Money",
+                                        20),
+                                    CustomMainIcon(Icons.phone_iphone_outlined,
+                                        "Buy Airtime", 30),
+                                    CustomMainIcon(Icons.receipt_outlined,
+                                        "Pay Bills", 30),
+                                    CustomMainIcon(Icons.star_border_rounded,
+                                        "Request", 30),
+                                  ],
+                                ),
+                              )
+                            : Container(
+                                padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: const [
+                                        CustomMainIcon(
+                                            FontAwesomeIcons
+                                                .arrowRightArrowLeft,
+                                            "Send Money",
+                                            20),
+                                        CustomMainIcon(
+                                            Icons.phone_iphone_outlined,
+                                            "Buy Airtime",
+                                            30),
+                                        CustomMainIcon(Icons.receipt_outlined,
+                                            "Pay Bills", 30),
+                                        CustomMainIcon(
+                                            Icons.star_border_rounded,
+                                            "Request",
+                                            30),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: const [
+                                        CustomMainIcon(
+                                            Icons.wifi_rounded, "Buy Data", 25),
+                                        CustomMainIcon(
+                                            Icons.money, "Quick Loan", 30),
+                                        CustomMainIcon(
+                                            Icons.sports_basketball_outlined,
+                                            "Savings",
+                                            30),
+                                        CustomMainIcon(
+                                            FontAwesomeIcons.calendarDays,
+                                            "Events",
+                                            25),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        Divider(
                           color: Colors.grey.shade400,
                           thickness: 0.5,
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          _switchValue != true
-                              ? Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Icon(
-                                      Icons.wallet,
-                                      size: 30,
-                                      color: Colors.grey.shade500,
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      "₦5,000,000.00",
-                                      style: kHeading1TextStyle,
-                                    )
-                                  ],
-                                )
-                              : Material(
-                                  elevation: 10,
-                                  child: Container(
-                                    height: 30,
-                                    width: 72,
-                                    padding: const EdgeInsets.all(4),
-                                    decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(30))),
-                                    child: const Text("₦****.**"),
-                                  ),
-                                ),
-                          Row(
-                            // crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                _switchValue != true ? "Show" : "Hide",
+                        Container(
+                          height: 125,
+                          width: width,
+                          decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                              image: DecorationImage(
+                                  image: AssetImage("assets/images/image1.png"),
+                                  fit: BoxFit.fill)),
+                        ),
+                        const CustDotIndicator(
+                          count: 3,
+                          custMaiN: MainAxisAlignment.center,
+                          custCross: CrossAxisAlignment.start,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Recent Transaction",
+                              style: kHeading1TextStyle.copyWith(
+                                  fontSize: 14, fontWeight: FontWeight.w800),
+                            ),
+                            TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                "See All",
                                 style: kHeading2TextStyle.copyWith(
-                                    fontSize: 14,
-                                    color: const Color.fromARGB(
-                                        255, 95, 115, 140)),
-                              ),
-                              // SizedBox(
-                              //   width: 30,
-                              // ),
-                              Transform.scale(
-                                scale: 0.8,
-                                child: CupertinoSwitch(
-                                  value: _switchValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _switchValue = value;
-                                    });
-                                  },
-                                  activeColor: Colors.blue,
+                                  fontWeight: FontWeight.w600,
+                                  color: Theme.of(context).primaryColor,
                                 ),
                               ),
-                            ],
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const CustDotIndicator(
-                        count: 4,
-                        custMaiN: MainAxisAlignment.start,
-                        custCross: CrossAxisAlignment.start,
-                      )
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                  child: Column(
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 6),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(""),
-                          TextButton(
-                            onPressed: () {
-                              if (seeAll == true) {
-                                setState(() {
-                                  seeAll = false;
-                                });
-                              } else {
-                                setState(() {
-                                  seeAll = true;
-                                });
-                              }
-                            },
-                            child: Text(
-                              seeAll == true ? 'See all' : 'Hide',
-                              style: kHeading2TextStyle.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: Theme.of(context).primaryColor,
-                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      seeAll == true
-                          ? Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: const [
-                                  CustomMainIcon(
-                                      FontAwesomeIcons.arrowRightArrowLeft,
-                                      "Send Money",
-                                      20),
-                                  CustomMainIcon(Icons.phone_iphone_outlined,
-                                      "Buy Airtime", 30),
-                                  CustomMainIcon(
-                                      Icons.receipt_outlined, "Pay Bills", 30),
-                                  CustomMainIcon(
-                                      Icons.star_border_rounded, "Request", 30),
-                                ],
-                              ),
-                            )
-                          : Container(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: const [
-                                      CustomMainIcon(
-                                          FontAwesomeIcons.arrowRightArrowLeft,
-                                          "Send Money",
-                                          20),
-                                      CustomMainIcon(
-                                          Icons.phone_iphone_outlined,
-                                          "Buy Airtime",
-                                          30),
-                                      CustomMainIcon(Icons.receipt_outlined,
-                                          "Pay Bills", 30),
-                                      CustomMainIcon(Icons.star_border_rounded,
-                                          "Request", 30),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: const [
-                                      CustomMainIcon(
-                                          Icons.wifi_rounded, "Buy Data", 25),
-                                      CustomMainIcon(
-                                          Icons.money, "Quick Loan", 30),
-                                      CustomMainIcon(
-                                          Icons.sports_basketball_outlined,
-                                          "Savings",
-                                          30),
-                                      CustomMainIcon(
-                                          FontAwesomeIcons.calendarDays,
-                                          "Events",
-                                          25),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      Divider(
-                        color: Colors.grey.shade400,
-                        thickness: 0.5,
-                      ),
-                      Container(
-                        height: 125,
-                        width: width,
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            color: Colors.amber,
-                            // image: DecorationImage(
-                            //     image: AssetImage("image1.png"))
-                                ),
-                      ),
-                      const CustDotIndicator(
-                        count: 3,
-                        custMaiN: MainAxisAlignment.center,
-                        custCross: CrossAxisAlignment.start,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Recent Transaction",
-                            style: kHeading1TextStyle.copyWith(
-                                fontSize: 14, fontWeight: FontWeight.w800),
-                          ),
-                          TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              "See All",
-                              style: kHeading2TextStyle.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        color: Colors.grey.shade400,
-                        thickness: 0.5,
-                      ),
-                      SingleChildScrollView(
-                          child: Column(
-                        children: [
-                          CustTransactions(
-                            formattedDate: formattedDate,
-                            formattedTime: formattedTime,
-                            transType: "Funds Transfer",
-                            transAmount: "- ₦5,000",
-                            transName: "Rowland Tunmishe..",
-                            statusStyle: kRedStatusTextStyle,
-                          ),
-                          CustTransactions(
+                          ],
+                        ),
+                        Divider(
+                          color: Colors.grey.shade400,
+                          thickness: 0.5,
+                        ),
+                        SingleChildScrollView(
+                            child: Column(
+                          children: [
+                            CustTransactions(
                               formattedDate: formattedDate,
                               formattedTime: formattedTime,
-                              transType: "Airtime USSD",
-                              transAmount: "+ \$30.21",
-                              transName: "NUWD2392002003",
-                              statusStyle: kGreenStatusTextStyle),
-                          CustTransactions(
-                              formattedDate: formattedDate,
-                              formattedTime: formattedTime,
-                              transType: "Airtime USSD",
-                              transAmount: "+ \$30.21",
-                              transName: "NUWD2392002003",
-                              statusStyle: kGreenStatusTextStyle),
-                        ],
-                      ))
-                    ],
+                              transType: "Funds Transfer",
+                              transAmount: "- ₦5,000",
+                              transName: "Rowland Tunmishe..",
+                              statusStyle: kRedStatusTextStyle,
+                            ),
+                            CustTransactions(
+                                formattedDate: formattedDate,
+                                formattedTime: formattedTime,
+                                transType: "Airtime USSD",
+                                transAmount: "+ \$30.21",
+                                transName: "NUWD2392002003",
+                                statusStyle: kGreenStatusTextStyle),
+                            CustTransactions(
+                                formattedDate: formattedDate,
+                                formattedTime: formattedTime,
+                                transType: "Airtime USSD",
+                                transAmount: "+ \$30.21",
+                                transName: "NUWD2392002003",
+                                statusStyle: kGreenStatusTextStyle),
+                          ],
+                        ))
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           },
         ),

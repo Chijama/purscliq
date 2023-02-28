@@ -1,8 +1,9 @@
+import 'dart:convert';
 import 'dart:developer';
 
-import 'package:purscliq_app/Homepage/user_data.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+
+import 'Homepage/user_data_model.dart';
 
 class Service {
   Future<UserDataModel?>? getUserData() async {
@@ -10,23 +11,27 @@ class Service {
       var client = http.Client();
 
       var url = Uri.parse("https://api305.purscliq.com/api/me");
-      var response = await client.get(url, headers: {
-        "Authorization": "Bearer 3862|VkbEHDe5fUM4YH7m7OjSAWmptRuFmWpC8oENyJSq",
-        'Content-type': 'application/json',
-        "Accept": "application/json",
-      });
-      log("This is reponse.body: ${response.body}");
+      var response = await client.get(
+        url,
+        headers: {
+          "Authorization":
+              "Bearer 3900|PSQdXvdXd85Mrc1k2GxVlSY54VsxP3kBQNSFCK15",
+          'Content-type': 'application/json',
+          "Accept": "application/json",
+        },
+      );
+      log("response ${response.body}");
       if (response.statusCode == 200) {
-        final json1 = json.decode(response.body);
-        log("this is $json1");
-        final services = UserDataModel.fromJson(json1);
+        final services = UserDataModel.fromJson(json.decode(response.body));
+        log("returned ${services.toJson()}");
         return services;
       } else {
-        throw Exception("Failed to load");
+        log("failed to fetch users =>${response.statusCode} => ${response.body}");
+        return UserDataModel();
       }
     } catch (e) {
-      log(e.toString());
-      throw Exception("Failed to load");
+      log("catch error from get user => $e");
+      return UserDataModel();
     }
   }
 }

@@ -1,13 +1,16 @@
 import 'dart:convert';
-import 'package:provider/provider.dart';
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
-import 'package:purscliq_app/Login/login_provider.dart';
-import 'package:purscliq_app/Homepage/homepage.dart';
-import 'package:purscliq_app/shared/textstyles.dart';
-import 'package:purscliq_app/shared/widget/textfield.dart';
+import 'package:provider/provider.dart';
+
+import '../Homepage/homepage.dart';
+import '../shared/textstyles.dart';
+import '../shared/widget/textfield.dart';
+import 'login_provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -54,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
       Uri.parse("https://api305.purscliq.com/api/login"),
       body: body,
     );
-    print(json.decode(r.body)['data']['token']);
+    log(json.decode(r.body)['data']['token']);
     String token = json.decode(r.body)['data']['token'];
     // json.decode(r.body)['data']['token'];
     state.getToken(token);
@@ -186,13 +189,14 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                        height: 80,
-                        width: 74,
-                        decoration: const BoxDecoration(
-                          color: Colors.amber,
-                          // image: DecorationImage(
-                          //     image: AssetImage('logo.jpg'))
-                        )),
+                      height: 80,
+                      width: 74,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/icons/logo.jpg'),
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: 60),
                     Text(
                       'Welcome',
@@ -212,10 +216,20 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.fromLTRB(12, 20, 24, 25),
                   child: Column(
                     children: [
-                      TextForm("User ID", 'Enter User ID', emailController,
-                          false, SizedBox()),
-                      TextForm('Password', 'Enter Password', passwordController,
-                          true, SizedBox()),
+                      TextForm(
+                        text: "User ID",
+                        hintText: 'Enter User ID',
+                        controller: emailController,
+                        obscureText: false,
+                        suffixWidget: const SizedBox.shrink(),
+                      ),
+                      TextForm(
+                        text: 'Password',
+                        hintText: 'Enter Password',
+                        controller: passwordController,
+                        obscureText: true,
+                        suffixWidget: const SizedBox.shrink(),
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -268,7 +282,7 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Don’t have account yet?',
+                            "Don’t have account yet?",
                             style: kBlue1TextStyle,
                           ),
                           TextButton(

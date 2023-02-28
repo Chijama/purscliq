@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:purscliq_app/Homepage/homepage.dart';
-import 'package:purscliq_app/Login/login.dart';
 import 'package:purscliq_app/shared/textstyles.dart';
 import 'package:purscliq_app/shared/widget/textfield.dart';
 
@@ -179,12 +175,12 @@ class _LoginReturningState extends State<LoginReturning> {
                       height: 80,
                       width: 74,
                       decoration: const BoxDecoration(
-                          color: Colors.amber,
-                          // image:
-                          //     DecorationImage(
-                          //       image: AssetImage('logo.jpg')
-                          //       )
-                                )),
+                        color: Colors.amber,
+                        // image:
+                        //     DecorationImage(
+                        //       image: AssetImage('logo.jpg')
+                        //       )
+                      )),
                   const SizedBox(height: 80),
                   Text(
                     'Welcome Back',
@@ -203,11 +199,11 @@ class _LoginReturningState extends State<LoginReturning> {
                   ),
                   const SizedBox(height: 20),
                   TextForm(
-                      'Password',
-                      'Enter Password',
-                      passwordController,
-                      _passwordVisible,
-                      InkWell(
+                      text: 'Password',
+                      hintText: 'Enter Password',
+                      controller: passwordController,
+                      obscureText: _passwordVisible,
+                      suffixWidget: InkWell(
                         onTap: () {
                           setState(() {
                             if (_passwordVisible == false) {
