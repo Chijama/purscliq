@@ -31,12 +31,14 @@ environment:
 dependencies:
   cupertino_icons: ^1.0.2
   dots_indicator: ^2.1.0
+  email_validator: ^2.1.17
   flutter:
     sdk: flutter
   flutter_secure_storage: ^8.0.0
   font_awesome_flutter: ^10.3.0
   google_fonts: ^3.0.1
   http: ^0.13.5
+  internet_connection_checker: ^1.0.0+1
   intl: ^0.18.0
   provider: ^6.0.5
 
@@ -59,6 +61,7 @@ flutter:
     - assets/icons/payment_method.png
     - assets/images/image1.png
     - assets/icons/logo.jpg
+    - assets/images/splash_screen.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:purscliq_app/shared/textstyles.dart';
+import '../textstyles.dart';
 
 class TextForm extends StatelessWidget {
   final String? text;
@@ -8,15 +8,17 @@ class TextForm extends StatelessWidget {
   final TextEditingController? controller;
   final bool? obscureText;
   final Widget? suffixWidget;
+  final String? Function(String?)? validator;
 
-  const TextForm(
-      {this.text,
-      this.hintText,
-      this.controller,
-      this.obscureText,
-      this.suffixWidget,
-      Key? key})
-      : super(key: key);
+  const TextForm({
+    this.text = "",
+    this.hintText = "",
+    this.controller,
+    this.obscureText = false,
+    this.suffixWidget,
+    this.validator,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,8 @@ class TextForm extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 4, 0, 12),
           child: TextFormField(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: validator,
               controller: controller,
               obscureText: obscureText!,
               decoration: InputDecoration(

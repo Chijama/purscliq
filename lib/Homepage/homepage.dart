@@ -18,9 +18,11 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  PageController controller = PageController();
   bool _switchValue = false;
   bool seeAll = false;
   Future<UserDataModel?>? userData;
+  double _pageIndex = 0;
 
   @override
   void initState() {
@@ -45,6 +47,89 @@ class _HomepageState extends State<Homepage> {
       }
     }
     return result;
+  }
+  //peteradeojo@outlook.com
+
+  Widget slided(String acc, String amount) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Row(
+          children: [
+            Text("Account - ", style: kHeading2TextStyle),
+            Text(acc,
+                //"${sFdata?.wallet?.accNo}" ?? "90324531823",
+                style: kHeading2TextStyle.copyWith(
+                  fontWeight: FontWeight.bold,
+                ))
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 15),
+          child: Divider(
+            color: Colors.grey.shade400,
+            thickness: 0.5,
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _switchValue != true
+                ? Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.wallet,
+                        size: 30,
+                        color: Colors.grey.shade500,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        amount,
+                        style: kHeading1TextStyle,
+                      )
+                    ],
+                  )
+                : Material(
+                    elevation: 10,
+                    child: Container(
+                      height: 30,
+                      width: 72,
+                      padding: const EdgeInsets.all(4),
+                      decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(30))),
+                      child: const Text("₦****.**"),
+                    ),
+                  ),
+            Row(
+              children: [
+                Text(
+                  _switchValue != true ? "Show" : "Hide",
+                  style: kHeading2TextStyle.copyWith(
+                      fontSize: 14,
+                      color: const Color.fromARGB(255, 95, 115, 140)),
+                ),
+                Transform.scale(
+                  scale: 0.8,
+                  child: CupertinoSwitch(
+                    value: _switchValue,
+                    onChanged: (value) {
+                      setState(() {
+                        _switchValue = value;
+                      });
+                    },
+                    activeColor: Colors.blue,
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ],
+    );
   }
 
   @override
@@ -102,17 +187,17 @@ class _HomepageState extends State<Homepage> {
                 children: <Widget>[
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
-                    height: 220,
-                    width: width,
+                    height: 200,
+                    width: MediaQuery.of(context).size.width,
                     color: Colors.grey.shade100,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
+                      children: [
+                        SizedBox(height: 8.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Hello $firstName" ?? "User",
+                              "Hello ${firstName}" ?? "User",
                               style: kHeading1TextStyle,
                             ),
                             IconButton(
@@ -124,93 +209,42 @@ class _HomepageState extends State<Homepage> {
                           ],
                         ),
                         const SizedBox(
-                          height: 15,
+                          height: 13,
                         ),
-                        Row(
-                          children: [
-                            Text("Savings Account - ",
-                                style: kHeading2TextStyle),
-                            Text("${sFdata?.wallet?.accNo}" ?? "90324531823",
-                                style: kHeading2TextStyle.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ))
-                          ],
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 15),
-                          child: Divider(
-                            color: Colors.grey.shade400,
-                            thickness: 0.5,
+                        Container(
+                          height: 90,
+                          width: MediaQuery.of(context).size.width,
+                          child: PageView(
+                            allowImplicitScrolling: true,
+                            scrollDirection: Axis.horizontal,
+                            controller: controller,
+                            children: <Widget>[
+                              slided(
+                                "${sFdata?.wallet?.accNo}" ?? "90324531823",
+                                "₦ ${sFdata?.wallet?.amt}" ?? "₦5,000,000.00",
+                              ),
+                              slided(
+                                "Savings",
+                                "₦ ${sFdata?.totalSaving}" ?? "0.00",
+                              ),
+                              slided(
+                                "Earnings",
+                                "₦ 0.00",
+                              ),
+                            ],
+                            onPageChanged: (index) {
+                              setState(() {
+                                _pageIndex = index.toDouble();
+                              });
+                            },
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            _switchValue != true
-                                ? Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Icon(
-                                        Icons.wallet,
-                                        size: 30,
-                                        color: Colors.grey.shade500,
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        "₦ ${sFdata?.wallet?.amt}" ??
-                                            "₦5,000,000.00",
-                                        style: kHeading1TextStyle,
-                                      )
-                                    ],
-                                  )
-                                : Material(
-                                    elevation: 10,
-                                    child: Container(
-                                      height: 30,
-                                      width: 72,
-                                      padding: const EdgeInsets.all(4),
-                                      decoration: const BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30))),
-                                      child: const Text("₦****.**"),
-                                    ),
-                                  ),
-                            Row(
-                              // crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  _switchValue != true ? "Show" : "Hide",
-                                  style: kHeading2TextStyle.copyWith(
-                                      fontSize: 14,
-                                      color: const Color.fromARGB(
-                                          255, 95, 115, 140)),
-                                ),
-                                Transform.scale(
-                                  scale: 0.8,
-                                  child: CupertinoSwitch(
-                                    value: _switchValue,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _switchValue = value;
-                                      });
-                                    },
-                                    activeColor: Colors.blue,
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        const CustDotIndicator(
-                          count: 4,
+                        // const SizedBox(
+                        //   height: 8,
+                        // ),
+                        CustDotIndicator(
+                          currentPage: _pageIndex,
+                          count: 3,
                           custMaiN: MainAxisAlignment.start,
                           custCross: CrossAxisAlignment.start,
                         )
@@ -334,11 +368,14 @@ class _HomepageState extends State<Homepage> {
                           decoration: const BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5)),
+                              color: Colors.amber,
                               image: DecorationImage(
-                                  image: AssetImage("assets/images/image1.png"),
-                                  fit: BoxFit.fill)),
+                                  fit: BoxFit.fill,
+                                  image:
+                                      AssetImage("assets/images/image1.png"))),
                         ),
-                        const CustDotIndicator(
+                        CustDotIndicator(
+                          currentPage: 0,
                           count: 3,
                           custMaiN: MainAxisAlignment.center,
                           custCross: CrossAxisAlignment.start,
@@ -505,16 +542,24 @@ class CustDotIndicator extends StatelessWidget {
     required this.count,
     required this.custMaiN,
     required this.custCross,
+    required this.currentPage,
     Key? key,
   }) : super(key: key);
   final int count;
+  final double currentPage;
   final MainAxisAlignment custMaiN;
   final CrossAxisAlignment custCross;
   @override
   Widget build(BuildContext context) {
+    // return PageViewDotIndicator(
+    //     currentItem: count,
+    //     count: count,
+    //     unselectedColor: Colors.grey,
+    //     selectedColor: Colors.blue);
     return DotsIndicator(
       mainAxisAlignment: custMaiN,
       dotsCount: count,
+      position: currentPage,
       decorator: DotsDecorator(
           color: const Color.fromARGB(255, 215, 222, 231),
           activeSize: const Size(21.0, 2.0),

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
+import 'package:email_validator/email_validator.dart';
 
 import '../Homepage/homepage.dart';
 import '../shared/textstyles.dart';
@@ -23,6 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   bool switchValue = false;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
   @override
   void dispose() {
     emailController.dispose();
@@ -61,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
     String token = json.decode(r.body)['data']['token'];
     // json.decode(r.body)['data']['token'];
     state.getToken(token);
-
+    log("status Code : ${r.statusCode}");
     if (r.statusCode == 200) {
       if (!mounted) return;
 
@@ -170,6 +172,11 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  void Validate(String email) {
+    bool isvalid = EmailValidator.validate(email);
+    print(isvalid);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -212,6 +219,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Form(
+                key: formKey,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(12, 20, 24, 25),
                   child: Column(
@@ -220,16 +228,28 @@ class _LoginPageState extends State<LoginPage> {
                         text: "User ID",
                         hintText: 'Enter User ID',
                         controller: emailController,
+                        validator: (value) {
+                          value != null && EmailValidator.validate(value)
+                              ? null
+                              : "Please enter a valid email";
+                          log("Validator is ${EmailValidator.validate(value!)}");
+                        },
                         obscureText: false,
                         suffixWidget: const SizedBox.shrink(),
                       ),
                       TextForm(
-                        text: 'Password',
-                        hintText: 'Enter Password',
-                        controller: passwordController,
-                        obscureText: true,
-                        suffixWidget: const SizedBox.shrink(),
-                      ),
+                          text: 'Password',
+                          hintText: 'Enter Password',
+                          controller: passwordController,
+                          obscureText: true,
+                          suffixWidget: const SizedBox.shrink(),
+                          validator: (password) {
+                            password != null &&
+                                    RegExp(r'(\s)').hasMatch(password)
+                                ? "Please Enter a Valid Password"
+                                : null;
+                            log("password validation ${password != null && RegExp(r'(\s)').hasMatch(password)}");
+                          }),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -264,7 +284,9 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 16),
                       ElevatedButton(
                           onPressed: () {
-                            login();
+                            final form = formKey.currentState;
+                            if (form!.validate()) {}
+                            //login();
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Theme.of(context).primaryColor,
@@ -282,7 +304,7 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Don’t have account yet?",
+                            'Don’t have account yet?',
                             style: kBlue1TextStyle,
                           ),
                           TextButton(
