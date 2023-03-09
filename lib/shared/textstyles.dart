@@ -1,5 +1,6 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:purscliq_app/shared/colors.dart';
 
 TextStyle kHeading1TextStyle = GoogleFonts.metrophobic(
   //fontFamily: 'Metropolis',
@@ -44,7 +45,7 @@ TextStyle kBlue1TextStyle = GoogleFonts.metrophobic(
 TextStyle kBodyTextStyle = GoogleFonts.khula(
   fontWeight: FontWeight.w400,
   fontSize: 12,
-  color: const Color.fromARGB(255, 132, 143, 159),
+  color: AppColor.greyText,
 );
 TextStyle kRedStatusTextStyle = GoogleFonts.khula(
   fontSize: 16,

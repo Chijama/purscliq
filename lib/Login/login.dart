@@ -172,14 +172,10 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void Validate(String email) {
-    bool isvalid = EmailValidator.validate(email);
-    print(isvalid);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
@@ -200,7 +196,7 @@ class _LoginPageState extends State<LoginPage> {
                       width: 74,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage('assets/icons/logo.jpg'),
+                          image: AssetImage('assets/icons/purscliq_logo.png'),
                         ),
                       ),
                     ),
@@ -225,29 +221,34 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       TextForm(
-                        text: "User ID",
+                        maximumLines: 1,
+                        labelText: "User ID",
                         hintText: 'Enter User ID',
                         controller: emailController,
                         validator: (value) {
-                          value != null && EmailValidator.validate(value)
-                              ? null
-                              : "Please enter a valid email";
+                          if (value!.isEmpty || EmailValidator.validate(value))
+                            null;
+                          // log("Validator is ${EmailValidator.validate(value!)}");
+                          else
+                            return "Please enter a valid email";
                           log("Validator is ${EmailValidator.validate(value!)}");
                         },
                         obscureText: false,
                         suffixWidget: const SizedBox.shrink(),
                       ),
                       TextForm(
-                          text: 'Password',
+                        maximumLines: 1,
+                          labelText: 'Password',
                           hintText: 'Enter Password',
                           controller: passwordController,
                           obscureText: true,
                           suffixWidget: const SizedBox.shrink(),
                           validator: (password) {
-                            password != null &&
-                                    RegExp(r'(\s)').hasMatch(password)
-                                ? "Please Enter a Valid Password"
-                                : null;
+                            if (password!.isEmpty ||
+                                RegExp(r'(\s)').hasMatch(password))
+                              return "Please enter a valid password";
+                            else
+                              return null;
                             log("password validation ${password != null && RegExp(r'(\s)').hasMatch(password)}");
                           }),
                       Row(
@@ -285,8 +286,9 @@ class _LoginPageState extends State<LoginPage> {
                       ElevatedButton(
                           onPressed: () {
                             final form = formKey.currentState;
-                            if (form!.validate()) {}
-                            //login();
+                            if (form!.validate()) {
+                              login();
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Theme.of(context).primaryColor,

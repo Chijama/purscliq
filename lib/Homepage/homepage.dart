@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:purscliq_app/airtime.dart';
+import 'package:purscliq_app/send_money.dart';
 
 import '../service.dart';
 import '../shared/textstyles.dart';
@@ -184,15 +186,16 @@ class _HomepageState extends State<Homepage> {
             log("${snapshot.data}");
             return SafeArea(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
-                    height: 200,
+                    height: 180,
                     width: MediaQuery.of(context).size.width,
                     color: Colors.grey.shade100,
                     child: Column(
                       children: [
-                        SizedBox(height: 8.0),
+                        SizedBox(height: 15.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -246,7 +249,7 @@ class _HomepageState extends State<Homepage> {
                           currentPage: _pageIndex,
                           count: 3,
                           custMaiN: MainAxisAlignment.start,
-                          custCross: CrossAxisAlignment.start,
+                          //  custCross: CrossAxisAlignment.start,
                         )
                       ],
                     ),
@@ -290,17 +293,29 @@ class _HomepageState extends State<Homepage> {
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
-                                  children: const [
+                                  children: [
                                     CustomMainIcon(
                                         FontAwesomeIcons.arrowRightArrowLeft,
                                         "Send Money",
-                                        20),
+                                        20, () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => SendMoney()),
+                                      );
+                                    }),
                                     CustomMainIcon(Icons.phone_iphone_outlined,
-                                        "Buy Airtime", 30),
+                                        "Buy Airtime", 30, () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Airtime()),
+                                      );
+                                    }),
                                     CustomMainIcon(Icons.receipt_outlined,
-                                        "Pay Bills", 30),
+                                        "Pay Bills", 30, () {}),
                                     CustomMainIcon(Icons.star_border_rounded,
-                                        "Request", 30),
+                                        "Request", 30, () {}),
                                   ],
                                 ),
                               )
@@ -311,22 +326,37 @@ class _HomepageState extends State<Homepage> {
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
-                                      children: const [
+                                      children: [
                                         CustomMainIcon(
                                             FontAwesomeIcons
                                                 .arrowRightArrowLeft,
                                             "Send Money",
-                                            20),
+                                            20, () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SendMoney()),
+                                          );
+                                        }),
                                         CustomMainIcon(
                                             Icons.phone_iphone_outlined,
                                             "Buy Airtime",
-                                            30),
+                                            30, () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Airtime()),
+                                          );
+                                        }),
                                         CustomMainIcon(Icons.receipt_outlined,
-                                            "Pay Bills", 30),
+                                            "Pay Bills", 30, () {}),
                                         CustomMainIcon(
                                             Icons.star_border_rounded,
                                             "Request",
-                                            30),
+                                            30,
+                                            () {}),
                                       ],
                                     ),
                                     const SizedBox(
@@ -337,19 +367,21 @@ class _HomepageState extends State<Homepage> {
                                           CrossAxisAlignment.center,
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        CustomMainIcon(
-                                            Icons.wifi_rounded, "Buy Data", 25),
-                                        CustomMainIcon(
-                                            Icons.money, "Quick Loan", 30),
+                                      children: [
+                                        CustomMainIcon(Icons.wifi_rounded,
+                                            "Buy Data", 25, () {}),
+                                        CustomMainIcon(Icons.money,
+                                            "Quick Loan", 30, () {}),
                                         CustomMainIcon(
                                             Icons.sports_basketball_outlined,
                                             "Savings",
-                                            30),
+                                            30,
+                                            () {}),
                                         CustomMainIcon(
                                             FontAwesomeIcons.calendarDays,
                                             "Events",
-                                            25),
+                                            25,
+                                            () {}),
                                       ],
                                     )
                                   ],
@@ -378,7 +410,7 @@ class _HomepageState extends State<Homepage> {
                           currentPage: 0,
                           count: 3,
                           custMaiN: MainAxisAlignment.center,
-                          custCross: CrossAxisAlignment.start,
+                          // custCross: CrossAxisAlignment.start,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -541,21 +573,16 @@ class CustDotIndicator extends StatelessWidget {
   const CustDotIndicator({
     required this.count,
     required this.custMaiN,
-    required this.custCross,
+    //  required this.custCross,
     required this.currentPage,
     Key? key,
   }) : super(key: key);
   final int count;
   final double currentPage;
   final MainAxisAlignment custMaiN;
-  final CrossAxisAlignment custCross;
+  // final CrossAxisAlignment custCross;
   @override
   Widget build(BuildContext context) {
-    // return PageViewDotIndicator(
-    //     currentItem: count,
-    //     count: count,
-    //     unselectedColor: Colors.grey,
-    //     selectedColor: Colors.blue);
     return DotsIndicator(
       mainAxisAlignment: custMaiN,
       dotsCount: count,
@@ -578,12 +605,14 @@ class CustomMainIcon extends StatelessWidget {
   const CustomMainIcon(
     this.custIcon,
     this.custText,
-    this.custSize, {
+    this.custSize,
+    this.onPressed, {
     Key? key,
   }) : super(key: key);
-  final IconData custIcon;
-  final String custText;
-  final double custSize;
+  final IconData? custIcon;
+  final String? custText;
+  final double? custSize;
+  final void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -593,15 +622,18 @@ class CustomMainIcon extends StatelessWidget {
           CircleAvatar(
             backgroundColor: Colors.grey.shade200,
             radius: 24.0,
-            child: Icon(
-              custIcon,
-              color: Theme.of(context).primaryColor,
-              size: custSize,
+            child: IconButton(
+              icon: Icon(
+                custIcon,
+                color: Theme.of(context).primaryColor,
+                size: custSize,
+              ),
+              onPressed: onPressed,
             ),
           ),
           const SizedBox(height: 6),
           Text(
-            custText,
+            custText!,
             textAlign: TextAlign.center,
             style: kHeading2TextStyle.copyWith(
               fontWeight: FontWeight.w600,

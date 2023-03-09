@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:purscliq_app/Homepage/homepage.dart';
+import 'package:purscliq_app/shared/colors.dart';
 import 'package:purscliq_app/shared/textstyles.dart';
 import 'package:purscliq_app/shared/widget/textfield.dart';
 
@@ -175,12 +176,10 @@ class _LoginReturningState extends State<LoginReturning> {
                       height: 80,
                       width: 74,
                       decoration: const BoxDecoration(
-                        color: Colors.amber,
-                        // image:
-                        //     DecorationImage(
-                        //       image: AssetImage('logo.jpg')
-                        //       )
-                      )),
+                          color: Colors.amber,
+                          image: DecorationImage(
+                              image: AssetImage(
+                                  "assets/icons/purscliq_logo.png")))),
                   const SizedBox(height: 80),
                   Text(
                     'Welcome Back',
@@ -199,7 +198,8 @@ class _LoginReturningState extends State<LoginReturning> {
                   ),
                   const SizedBox(height: 20),
                   TextForm(
-                      text: 'Password',
+                    maximumLines: 1,
+                      labelText: 'Password',
                       hintText: 'Enter Password',
                       controller: passwordController,
                       obscureText: _passwordVisible,
@@ -243,7 +243,7 @@ class _LoginReturningState extends State<LoginReturning> {
                             login();
                           },
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Theme.of(context).primaryColor,
+                              backgroundColor: AppColor.blue,
                               minimumSize: Size(
                                   MediaQuery.of(context).size.width * 0.70,
                                   50)),

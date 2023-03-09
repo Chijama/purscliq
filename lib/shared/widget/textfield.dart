@@ -3,20 +3,26 @@ import 'package:flutter/material.dart';
 import '../textstyles.dart';
 
 class TextForm extends StatelessWidget {
-  final String? text;
+  final String? labelText;
   final String? hintText;
   final TextEditingController? controller;
   final bool? obscureText;
   final Widget? suffixWidget;
   final String? Function(String?)? validator;
+  final Color? fillColor;
+  final TextInputType? keyboardType;
+  final int? maximumLines;
 
   const TextForm({
-    this.text = "",
+    this.labelText = "",
     this.hintText = "",
     this.controller,
     this.obscureText = false,
     this.suffixWidget,
     this.validator,
+    this.fillColor,
+    this.keyboardType,
+    this.maximumLines,
     Key? key,
   }) : super(key: key);
 
@@ -27,17 +33,21 @@ class TextForm extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          text ?? "",
+          labelText ?? "",
           style: kBlack3TextStyle,
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 4, 0, 12),
           child: TextFormField(
-              autovalidateMode: AutovalidateMode.onUserInteraction,
+              maxLines: maximumLines,
+              keyboardType: keyboardType,
+              //  autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: validator,
               controller: controller,
               obscureText: obscureText!,
               decoration: InputDecoration(
+                  fillColor: fillColor,
+                  filled: true,
                   suffixIcon: suffixWidget,
                   border: OutlineInputBorder(
                     borderRadius: const BorderRadius.all(Radius.circular(4)),
