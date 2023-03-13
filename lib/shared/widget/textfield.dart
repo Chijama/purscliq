@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:purscliq_app/shared/colors.dart';
 
 import '../textstyles.dart';
 
@@ -8,6 +9,7 @@ class TextForm extends StatelessWidget {
   final TextEditingController? controller;
   final bool? obscureText;
   final Widget? suffixWidget;
+  final Widget? prefixWidget;
   final String? Function(String?)? validator;
   final Color? fillColor;
   final TextInputType? keyboardType;
@@ -19,6 +21,7 @@ class TextForm extends StatelessWidget {
     this.controller,
     this.obscureText = false,
     this.suffixWidget,
+    this.prefixWidget,
     this.validator,
     this.fillColor,
     this.keyboardType,
@@ -46,8 +49,9 @@ class TextForm extends StatelessWidget {
               controller: controller,
               obscureText: obscureText!,
               decoration: InputDecoration(
-                  fillColor: fillColor,
+                  fillColor: fillColor == null ? AppColor.white : fillColor,
                   filled: true,
+                  prefixIcon: prefixWidget,
                   suffixIcon: suffixWidget,
                   border: OutlineInputBorder(
                     borderRadius: const BorderRadius.all(Radius.circular(4)),

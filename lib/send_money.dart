@@ -169,7 +169,8 @@ class _SendMoneyState extends State<SendMoney> {
                                             newPost = true;
                                             newTransferTypeController.text =
                                                 "to Other Banks";
-                                          });
+                                          }
+                                          );
                                         },
                                         child: Container(
                                           padding: const EdgeInsets.symmetric(
@@ -346,7 +347,8 @@ class _SendMoneyState extends State<SendMoney> {
                                   searchMatchFn: (item, searchValue) {
                                     return (item.value
                                         .toString()
-                                        .contains(searchValue));
+                                        .toLowerCase()
+                                        .contains(searchValue.toLowerCase()));
                                   },
                                 ),
                                 //This to clear the search value when you close the menu

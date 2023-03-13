@@ -33,7 +33,7 @@ class _HomepageState extends State<Homepage> {
   }
 
   getData() async {
-    userData = Service().getUserData();
+    userData = Service().getUserData(context);
     setState(() {});
   }
 
@@ -288,35 +288,43 @@ class _HomepageState extends State<Homepage> {
                         ),
                         const SizedBox(height: 8),
                         seeAll == true
-                            ? Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    CustomMainIcon(
-                                        FontAwesomeIcons.arrowRightArrowLeft,
-                                        "Send Money",
-                                        20, () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => SendMoney()),
-                                      );
-                                    }),
-                                    CustomMainIcon(Icons.phone_iphone_outlined,
-                                        "Buy Airtime", 30, () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Airtime()),
-                                      );
-                                    }),
-                                    CustomMainIcon(Icons.receipt_outlined,
-                                        "Pay Bills", 30, () {}),
-                                    CustomMainIcon(Icons.star_border_rounded,
-                                        "Request", 30, () {}),
-                                  ],
+                            ? Center(
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 0, 16, 0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      CustomMainIcon(
+                                          FontAwesomeIcons.arrowRightArrowLeft,
+                                          "Send Money",
+                                          20, () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SendMoney()),
+                                        );
+                                      }),
+                                      CustomMainIcon(
+                                          Icons.phone_iphone_outlined,
+                                          "Buy Airtime",
+                                          30, () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Airtime()),
+                                        );
+                                      }),
+                                      CustomMainIcon(Icons.receipt_outlined,
+                                          "Pay Bills", 30, () {}),
+                                      CustomMainIcon(Icons.star_border_rounded,
+                                          "Request", 30, () {}),
+                                    ],
+                                  ),
                                 ),
                               )
                             : Container(
@@ -324,6 +332,8 @@ class _HomepageState extends State<Homepage> {
                                 child: Column(
                                   children: [
                                     Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [

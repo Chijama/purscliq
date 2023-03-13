@@ -1,18 +1,18 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:purscliq_app/Login/login.dart';
+import 'package:purscliq_app/SplashScreen/none.dart';
 import 'package:purscliq_app/returning.dart';
 
-class ConnectionCheckerDemo extends StatefulWidget {
-  const ConnectionCheckerDemo({Key? key}) : super(key: key);
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
   @override
-  State<ConnectionCheckerDemo> createState() => _ConnectionCheckerDemoState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _ConnectionCheckerDemoState extends State<ConnectionCheckerDemo> {
+class _SplashScreenState extends State<SplashScreen> {
   Map _source = {ConnectivityResult.none: false};
   final NetworkConnectivity _networkConnectivity = NetworkConnectivity.instance;
   String string = '';
@@ -22,41 +22,34 @@ class _ConnectionCheckerDemoState extends State<ConnectionCheckerDemo> {
     _networkConnectivity.initialise();
     _networkConnectivity.myStream.listen((source) {
       _source = source;
-      print('source $_source');
+      print('source ${_source}');
+
       // 1.
       switch (_source.keys.toList()[0]) {
         case ConnectivityResult.mobile:
+          string = "mobile";
           Timer(
-              const Duration(seconds: 5),
+              const Duration(seconds: 3),
               () => Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => const LoginPage())));
           break;
         case ConnectivityResult.wifi:
+          string = "wifi";
           Timer(
-              const Duration(seconds: 5),
+              const Duration(seconds: 3),
               () => Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => const LoginPage())));
           break;
         case ConnectivityResult.none:
 
         default:
+          string = "none";
           Timer(
               const Duration(seconds: 5),
-              () => Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const LoginReturning())));
+              () => Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => NoInternet())));
+          setState(() {});
       }
-
-      // 3.
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            string,
-            style: const TextStyle(fontSize: 30),
-          ),
-        ),
-      );
     });
   }
 
@@ -65,11 +58,7 @@ class _ConnectionCheckerDemoState extends State<ConnectionCheckerDemo> {
     return Scaffold(
         body: Column(children: [
       Visibility(
-        child: const InternetNotAvailable(),
-        visible: _source.keys.toList()[0] != ConnectivityResult.mobile &&
-            _source.keys.toList()[0] != ConnectivityResult.wifi &&
-            _source.keys.toList()[0] == ConnectivityResult.none,
-      ),
+          child: const InternetNotAvailable(), visible: string == "none"),
       Flexible(
           flex: 1,
           fit: FlexFit.tight,

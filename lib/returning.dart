@@ -173,13 +173,15 @@ class _LoginReturningState extends State<LoginReturning> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                      height: 80,
-                      width: 74,
-                      decoration: const BoxDecoration(
-                          color: Colors.amber,
-                          image: DecorationImage(
-                              image: AssetImage(
-                                  "assets/icons/purscliq_logo.png")))),
+                    height: 80,
+                    width: 74,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        
+                        image: AssetImage('assets/icons/purscliq_logo.png'),
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 80),
                   Text(
                     'Welcome Back',
@@ -198,7 +200,7 @@ class _LoginReturningState extends State<LoginReturning> {
                   ),
                   const SizedBox(height: 20),
                   TextForm(
-                    maximumLines: 1,
+                      maximumLines: 1,
                       labelText: 'Password',
                       hintText: 'Enter Password',
                       controller: passwordController,
