@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // import 'package:purscliq_app/Profile/change_cliq_id.dart';
 // import 'package:purscliq_app/Profile/change_password.dart';
-// import 'package:purscliq_app/Profile/edit_profile.dart';
+import 'package:purscliq_app/Profile/edit_profile.dart';
 // import 'package:purscliq_app/Profile/change_pin.dart';
 import 'package:purscliq_app/shared/colors.dart';
 import 'package:purscliq_app/shared/textstyles.dart';
@@ -32,10 +32,8 @@ class Profile extends StatelessWidget {
               CustomPageLink(
                   text: "Edit Profile",
                   onTap: () {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                            // builder: (context) => const EditProfile()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const EditProfile()));
                   }),
               CustomPageLink(
                   text: "Change Cliq ID",
@@ -43,7 +41,7 @@ class Profile extends StatelessWidget {
                     // Navigator.push(
                     //     context,
                     //     MaterialPageRoute(
-                            // builder: (context) => const ChangeCliqID()));
+                    // builder: (context) => const ChangeCliqID()));
                   }),
               CustomPageLink(
                   text: "Change Pin",

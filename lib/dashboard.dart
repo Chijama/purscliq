@@ -12,7 +12,7 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   int bottomNavigatorPageIndex = 0;
-  final pages = [const Homepage(), HelpAndSupport(), const More()];
+  final pages = [const Homepage(), const HelpAndSupport(), const More()];
   void onItemTapped(int index) {
     setState(() {
       bottomNavigatorPageIndex = index;

@@ -5,7 +5,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:purscliq_app/Login/login.dart';
 import 'package:purscliq_app/SplashScreen/none.dart';
-import 'package:purscliq_app/returning.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -23,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
     _networkConnectivity.initialise();
     _networkConnectivity.myStream.listen((source) {
       _source = source;
-      print('source ${_source}');
+      print('source $_source');
 
       // 1.
       switch (_source.keys.toList()[0]) {
@@ -59,7 +58,8 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
         body: Column(children: [
       Visibility(
-          child: const InternetNotAvailable(), visible: string == "none"),
+          visible: string == "none",
+          child: const InternetNotAvailable()),
       Flexible(
           flex: 1,
           fit: FlexFit.tight,

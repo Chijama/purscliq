@@ -234,6 +234,7 @@ class _LoginPageState extends State<LoginPage> {
                             return "Please enter a valid email";
                           }
                           log("Validator is ${EmailValidator.validate(value)}");
+                          return null;
                         },
                         obscureText: false,
                         suffixWidget: const SizedBox.shrink(),

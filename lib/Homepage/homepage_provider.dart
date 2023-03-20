@@ -10,16 +10,17 @@ class HomepageProvider extends ChangeNotifier {
   String? bankName;
   String? accNumber;
   String? accName;
+  String? imgUrl;
 
   void UserInformation(
-    String? provFirstName,
-    String? provLastName,
-    String? provEmail,
-    String? provPhone,
-    String? provBankName,
-    String? provAccNmae,
-    String? provAccNumber,
-  ) {
+      String? provFirstName,
+      String? provLastName,
+      String? provEmail,
+      String? provPhone,
+      String? provBankName,
+      String? provAccNmae,
+      String? provAccNumber,
+      String? provImgUrl) {
     firstName = provFirstName;
     lastName = provLastName;
     email = provEmail;
@@ -27,7 +28,8 @@ class HomepageProvider extends ChangeNotifier {
     bankName = provBankName;
     accNumber = provAccNumber;
     accName = provAccNmae;
-    log(' this is $firstName, $bankName');
+    imgUrl = provImgUrl ;
+    log(' this is $firstName, $bankName, $imgUrl');
     notifyListeners();
   }
 }

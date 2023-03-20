@@ -19,43 +19,43 @@ class More extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(16, 24, 16, 60),
         child: Column(
           children: [
-            _custom_page_link(
+            CustomPageLink(
                 leadingIcon: Icons.info_outline_rounded,
                 text: "Account Information",
                 onTap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AccountInformation()));
+                          builder: (context) => const AccountInformation()));
                 }),
-            _custom_page_link(
+            CustomPageLink(
                 leadingIcon: Icons.person_3_rounded,
                 text: "Profile",
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => const Profile()));
                 }),
-            _custom_page_link(
+            CustomPageLink(
                 leadingIcon: Icons.notifications,
                 text: "Notification Settings",
                 onTap: () {}),
-            _custom_page_link(
+            CustomPageLink(
                 leadingIcon: Icons.bar_chart_outlined,
                 text: "Earnings",
                 onTap: () {}),
-            _custom_page_link(
+            CustomPageLink(
                 leadingIcon: Icons.share_outlined,
                 text: "Referral",
                 onTap: () {}),
-            _custom_page_link(
+            CustomPageLink(
                 leadingIcon: Icons.fingerprint_rounded,
                 text: "Biometric Settings",
                 onTap: () {}),
-            _custom_page_link(
+            CustomPageLink(
                 leadingIcon: Icons.privacy_tip_outlined,
                 text: "Privacy Policy",
                 onTap: () {}),
-            _custom_page_link(
+            CustomPageLink(
                 leadingIcon: Icons.info_outline_rounded,
                 text: "SignOut",
                 onTap: () {}),
@@ -66,8 +66,8 @@ class More extends StatelessWidget {
   }
 }
 
-class _custom_page_link extends StatelessWidget {
-  const _custom_page_link({
+class CustomPageLink extends StatelessWidget {
+  const CustomPageLink({
     Key? key,
     required this.leadingIcon,
     required this.text,

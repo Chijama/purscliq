@@ -166,7 +166,8 @@ class _HomepageState extends State<Homepage> {
                 (sFdata?.phone)!,
                 (sFdata?.bankDetails?.bankName),
                 (sFdata?.bankDetails?.accountName),
-                (sFdata?.bankDetails?.accountNumber));
+                (sFdata?.bankDetails?.accountNumber),
+               (sFdata?. avatarUrl), );
             log("${snapshot.data}");
             return SafeArea(
               child: Column(
