@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:purscliq_app/shared/colors.dart';
 import 'package:purscliq_app/shared/textstyles.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:purscliq_app/shared/widget/textfield.dart';
+import 'package:purscliq_app/shared/widget/textform.dart';
+import 'package:purscliq_app/shared/widget/custom_app_bar.dart';
 
 class Airtime extends StatefulWidget {
   const Airtime({super.key});
@@ -21,23 +20,9 @@ class _AirtimeState extends State<Airtime> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back_ios_new_rounded,
-              color: AppColor.blue,
-            ),
-            onPressed: () => Navigator.pop(context),
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
+        appBar: const CustomAppBar(
+          title: "AIRTIME",
           automaticallyImplyLeading: true,
-          centerTitle: true,
-          title: Text(
-            "Airtime",
-            style: kBlack1TextStyle.copyWith(
-                fontWeight: FontWeight.w800, fontSize: 18),
-          ),
         ),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(12, 32, 12, 0),
@@ -140,7 +125,7 @@ class _AirtimeState extends State<Airtime> {
                                 hintStyle: kBlue1TextStyle.copyWith(
                                     color: Colors.grey.shade300))),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 25,
                       ),
                       GestureDetector(
@@ -153,7 +138,7 @@ class _AirtimeState extends State<Airtime> {
                             border: Border.all(
                                 width: 0, color: Colors.grey.shade300),
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.person_add_alt_outlined,
                             color: AppColor.blue,
                           ),
@@ -163,6 +148,7 @@ class _AirtimeState extends State<Airtime> {
                   ),
                 ),
                 TextForm(
+                    readOnly: true,
                     controller: networkProviderController,
                     //prefixWidget: ,
                     labelText: "Select Network Provider",
@@ -192,7 +178,7 @@ class _AirtimeState extends State<Airtime> {
                                       decoration: const BoxDecoration(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10)),
-                                          color: AppColor.greyText),
+                                          color: AppColor.grey),
                                     ),
                                     ListView(
                                       scrollDirection: Axis.vertical,
@@ -242,12 +228,13 @@ class _AirtimeState extends State<Airtime> {
                 //           //serviceProviderItems.Items.map((e) => DropdownMenuItem<serviceProviderItem>(child: serviceProviderItems.buildItem(e),value: e,)),
                 //           )),
                 // ),
-                TextForm(
+                const TextForm(
+                  readOnly: false,
                   labelText: "Amount",
                   hintText: "₦ Amount",
                   fillColor: AppColor.white,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 70,
                 ),
                 ElevatedButton(
@@ -269,7 +256,12 @@ class _AirtimeState extends State<Airtime> {
     );
   }
 
-  List<String> serviceProviderText = ["MTN Airtime VTU", "9mobile Airtime VTU", "Airtel Airtime VTU", "Glo Airtime VTU"];
+  List<String> serviceProviderText = [
+    "MTN Airtime VTU",
+    "9mobile Airtime VTU",
+    "Airtel Airtime VTU",
+    "Glo Airtime VTU"
+  ];
   List<String> logoLinkT = [
     "assets/icons/mtn.png",
     "assets/icons/9mobile.png",
@@ -280,11 +272,11 @@ class _AirtimeState extends State<Airtime> {
   Widget buildItem(String logolink, String serviceProvider) => GestureDetector(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          margin: EdgeInsets.symmetric(vertical: 8),
+          margin: const EdgeInsets.symmetric(vertical: 8),
           height: 50,
           decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10)),
-              color: Color.fromARGB(255, 243, 244, 246)),
+              color: AppColor.lightgrey),
           child: Row(
             children: [
               Image(
@@ -292,7 +284,7 @@ class _AirtimeState extends State<Airtime> {
                   height: 28,
                   width: 28,
                   image: AssetImage(logolink)),
-              SizedBox(width: 20),
+              const SizedBox(width: 20),
               Text(serviceProvider),
             ],
           ),

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Timer(
               const Duration(seconds: 5),
               () => Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => NoInternet())));
+                  MaterialPageRoute(builder: (context) => const NoInternet())));
           setState(() {});
       }
     });
@@ -90,7 +91,7 @@ class NetworkConnectivity {
     ConnectivityResult result = await _networkConnectivity.checkConnectivity();
     _checkStatus(result);
     _networkConnectivity.onConnectivityChanged.listen((result) {
-      print(result);
+      log('$result');
       _checkStatus(result);
     });
   }

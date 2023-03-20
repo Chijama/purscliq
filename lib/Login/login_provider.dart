@@ -2,12 +2,9 @@ import 'package:flutter/cupertino.dart';
 
 class LoginProvider extends ChangeNotifier {
   String? token;
-  void getToken(String? ptoken) {
-    token = ptoken;
+  void getToken(String? provToken) {
+    token = provToken;
     notifyListeners();
   }
 
-  String? setToken() {
-    return token;
-  }
 }

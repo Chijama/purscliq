@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:purscliq_app/shared/textstyles.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 

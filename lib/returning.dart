@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:purscliq_app/Homepage/homepage.dart';
+import 'package:purscliq_app/dashboard.dart';
 import 'package:purscliq_app/shared/colors.dart';
 import 'package:purscliq_app/shared/textstyles.dart';
-import 'package:purscliq_app/shared/widget/textfield.dart';
+import 'package:purscliq_app/shared/widget/textform.dart';
 
 class LoginReturning extends StatefulWidget {
   const LoginReturning({super.key});
@@ -53,7 +53,7 @@ class _LoginReturningState extends State<LoginReturning> {
       if (!mounted) return;
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const Homepage()),
+        MaterialPageRoute(builder: (context) => const Dashboard()),
       );
     } else if (r.statusCode == 403 || r.statusCode == 404) {
       if (!mounted) return;
@@ -177,7 +177,6 @@ class _LoginReturningState extends State<LoginReturning> {
                     width: 74,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                        
                         image: AssetImage('assets/icons/purscliq_logo.png'),
                       ),
                     ),
@@ -200,6 +199,7 @@ class _LoginReturningState extends State<LoginReturning> {
                   ),
                   const SizedBox(height: 20),
                   TextForm(
+                    readOnly: false,
                       maximumLines: 1,
                       labelText: 'Password',
                       hintText: 'Enter Password',

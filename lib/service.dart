@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import '../Login/login_provider.dart';
-import 'Homepage/user_data_model.dart';
+import 'user_data_model.dart';
 
 class Service {
   Future<UserDataModel?>? getUserData(BuildContext context) async {
@@ -14,7 +14,7 @@ class Service {
       var url = Uri.parse("https://api305.purscliq.com/api/me");
       var loginState = Provider.of<LoginProvider>(context, listen: false);
       var token = loginState.token;
-      log("LOgin state $token");
+      log("Login state $token");
       var response = await client.get(
         
         url,

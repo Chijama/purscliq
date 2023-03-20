@@ -36,6 +36,11 @@ TextStyle kBlack3TextStyle = GoogleFonts.metrophobic(
   color: const Color.fromARGB(255, 21, 21, 34),
 );
 
+TextStyle kAppbarTextStyle = GoogleFonts.metrophobic(
+  fontWeight: FontWeight.w800,
+  fontSize: 18,
+  color: AppColor.appBarTitle,
+);
 TextStyle kBlue1TextStyle = GoogleFonts.metrophobic(
   fontWeight: FontWeight.w400,
   fontSize: 14,
@@ -45,7 +50,7 @@ TextStyle kBlue1TextStyle = GoogleFonts.metrophobic(
 TextStyle kBodyTextStyle = GoogleFonts.khula(
   fontWeight: FontWeight.w400,
   fontSize: 12,
-  color: AppColor.greyText,
+  color: AppColor.grey,
 );
 TextStyle kRedStatusTextStyle = GoogleFonts.khula(
   fontSize: 16,

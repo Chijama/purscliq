@@ -5,12 +5,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:purscliq_app/airtime.dart';
+import 'package:provider/provider.dart';
+import 'package:purscliq_app/Airtime/airtime.dart';
+import 'package:purscliq_app/Homepage/homepage_provider.dart';
 import 'package:purscliq_app/send_money.dart';
 
 import '../service.dart';
 import '../shared/textstyles.dart';
-import 'user_data_model.dart';
+import '../user_data_model.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -140,35 +142,8 @@ class _HomepageState extends State<Homepage> {
     String formattedDate = DateFormat.MEd().format(now);
     String formattedTime = DateFormat.jms().format(now);
     final width = MediaQuery.of(context).size.width;
-    int selectecIndex = 0;
-    void onItemTapped(int index) {
-      setState(() {
-        selectecIndex = index;
-      });
-    }
-
+    var state = Provider.of<HomepageProvider>(context, listen: false);
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        currentIndex: selectecIndex,
-        onTap: onItemTapped,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.house),
-            label: 'Dashboard',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.support_agent_rounded),
-            label: 'Help and support',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person_outline_rounded,
-            ),
-            label: 'More',
-          ),
-        ],
-      ),
       body: SingleChildScrollView(
         child: FutureBuilder<UserDataModel?>(
           future: userData,
@@ -181,8 +156,17 @@ class _HomepageState extends State<Homepage> {
                 return const Text("Empty");
               }
             }
+
             Fdata? sFdata = snapshot.data?.fdata;
             String? firstName = capitalize((snapshot.data?.fdata?.firstName)!);
+            state.UserInformation(
+                firstName,
+                capitalize((sFdata?.lastName)!),
+                (sFdata?.email)!.toLowerCase(),
+                (sFdata?.phone)!,
+                (sFdata?.bankDetails?.bankName),
+                (sFdata?.bankDetails?.accountName),
+                (sFdata?.bankDetails?.accountNumber));
             log("${snapshot.data}");
             return SafeArea(
               child: Column(
@@ -195,12 +179,12 @@ class _HomepageState extends State<Homepage> {
                     color: Colors.grey.shade100,
                     child: Column(
                       children: [
-                        SizedBox(height: 15.0),
+                        const SizedBox(height: 15.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Hello ${firstName}" ?? "User",
+                              "Hello $firstName" ?? "User",
                               style: kHeading1TextStyle,
                             ),
                             IconButton(
@@ -214,7 +198,7 @@ class _HomepageState extends State<Homepage> {
                         const SizedBox(
                           height: 13,
                         ),
-                        Container(
+                        SizedBox(
                           height: 90,
                           width: MediaQuery.of(context).size.width,
                           child: PageView(
@@ -306,7 +290,7 @@ class _HomepageState extends State<Homepage> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  SendMoney()),
+                                                  const SendMoney()),
                                         );
                                       }),
                                       CustomMainIcon(
@@ -316,7 +300,8 @@ class _HomepageState extends State<Homepage> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) => Airtime()),
+                                              builder: (context) =>
+                                                  const Airtime()),
                                         );
                                       }),
                                       CustomMainIcon(Icons.receipt_outlined,
@@ -346,7 +331,7 @@ class _HomepageState extends State<Homepage> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    SendMoney()),
+                                                    const SendMoney()),
                                           );
                                         }),
                                         CustomMainIcon(
@@ -357,7 +342,7 @@ class _HomepageState extends State<Homepage> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    Airtime()),
+                                                    const Airtime()),
                                           );
                                         }),
                                         CustomMainIcon(Icons.receipt_outlined,
@@ -416,7 +401,7 @@ class _HomepageState extends State<Homepage> {
                                   image:
                                       AssetImage("assets/images/image1.png"))),
                         ),
-                        CustDotIndicator(
+                        const CustDotIndicator(
                           currentPage: 0,
                           count: 3,
                           custMaiN: MainAxisAlignment.center,

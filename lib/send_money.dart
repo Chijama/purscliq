@@ -1,10 +1,9 @@
-import 'dart:developer';
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:purscliq_app/shared/colors.dart';
 import 'package:purscliq_app/shared/textstyles.dart';
-import 'package:purscliq_app/shared/widget/textfield.dart';
+import 'package:purscliq_app/shared/widget/textform.dart';
+import 'package:purscliq_app/shared/widget/button.dart';
 
 class SendMoney extends StatefulWidget {
   const SendMoney({super.key});
@@ -90,6 +89,7 @@ class _SendMoneyState extends State<SendMoney> {
                     child: Column(
                   children: <Widget>[
                     TextForm(
+                      readOnly: true,
                       controller: newTransferTypeController,
                       maximumLines: 1,
                       fillColor: AppColor.white,
@@ -121,7 +121,7 @@ class _SendMoneyState extends State<SendMoney> {
                                         decoration: const BoxDecoration(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10)),
-                                            color: AppColor.greyText),
+                                            color: AppColor.grey),
                                       ),
                                       const SizedBox(height: 10),
                                       GestureDetector(
@@ -169,8 +169,7 @@ class _SendMoneyState extends State<SendMoney> {
                                             newPost = true;
                                             newTransferTypeController.text =
                                                 "to Other Banks";
-                                          }
-                                          );
+                                          });
                                         },
                                         child: Container(
                                           padding: const EdgeInsets.symmetric(
@@ -213,39 +212,34 @@ class _SendMoneyState extends State<SendMoney> {
                       child: Column(
                         children: [
                           const TextForm(
+                            readOnly: false,
                             maximumLines: 1,
                             labelText: "Amount",
                             fillColor: AppColor.white,
                             keyboardType: TextInputType.number,
                           ),
                           const TextForm(
+                            readOnly: false,
                             maximumLines: 1,
                             labelText: "Enter cliq ID",
                             fillColor: AppColor.white,
                           ),
                           const TextForm(
+                            readOnly: false,
                             maximumLines: 1,
                             labelText: "Account Name",
                             fillColor: AppColor.white,
                           ),
                           const TextForm(
+                            readOnly: false,
                             labelText: "Narrative or Reason",
                             fillColor: AppColor.white,
                             maximumLines: 3,
                           ),
-                          const SizedBox(height: 12),
-                          ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColor.blue,
-                                  minimumSize: Size(
-                                      MediaQuery.of(context).size.width, 50)),
-                              child: Text(
-                                'Continue',
-                                style: kBlack2TextStyle.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600),
-                              )),
+                          CustomButton(
+                            label: 'Continue',
+                            onPressed: () {},
+                          )
                         ],
                       ),
                     ),
@@ -292,7 +286,7 @@ class _SendMoneyState extends State<SendMoney> {
                                 buttonStyleData: ButtonStyleData(
                                     width: MediaQuery.of(context).size.width,
                                     height: 50,
-                                    padding: EdgeInsets.symmetric(
+                                    padding: const EdgeInsets.symmetric(
                                         horizontal: 10, vertical: 8),
                                     decoration: BoxDecoration(
                                         color: AppColor.white,
@@ -361,40 +355,35 @@ class _SendMoneyState extends State<SendMoney> {
                             ),
                           ),
                           const TextForm(
+                            readOnly: false,
                             maximumLines: 1,
                             labelText: "Amount",
                             fillColor: AppColor.white,
                             keyboardType: TextInputType.number,
                           ),
                           const TextForm(
+                            readOnly: false,
                             maximumLines: 1,
                             labelText: "Enter Account Number",
                             fillColor: AppColor.white,
                             keyboardType: TextInputType.number,
                           ),
                           const TextForm(
+                            readOnly: false,
                             labelText: "Account Name",
                             fillColor: AppColor.white,
                             maximumLines: 1,
                           ),
                           const TextForm(
+                            readOnly: false,
                             labelText: "Narrative or Reason",
                             fillColor: AppColor.white,
                             maximumLines: 3,
                           ),
-                          const SizedBox(height: 12),
-                          ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColor.blue,
-                                  minimumSize: Size(
-                                      MediaQuery.of(context).size.width, 50)),
-                              child: Text(
-                                'Continue',
-                                style: kBlack2TextStyle.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600),
-                              )),
+                          CustomButton(
+                            label: 'Continue',
+                            onPressed: () {},
+                          )
                         ],
                       ),
                     ),
@@ -411,6 +400,7 @@ class _SendMoneyState extends State<SendMoney> {
                     child: Column(
                   children: <Widget>[
                     TextForm(
+                      readOnly: true,
                       maximumLines: 1,
                       fillColor: AppColor.white,
                       labelText: "Select Transfer Type",
@@ -441,7 +431,7 @@ class _SendMoneyState extends State<SendMoney> {
                                         decoration: const BoxDecoration(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10)),
-                                            color: AppColor.greyText),
+                                            color: AppColor.grey),
                                       ),
                                       const SizedBox(height: 10),
                                       GestureDetector(
@@ -532,6 +522,7 @@ class _SendMoneyState extends State<SendMoney> {
                       child: Column(
                         children: [
                           TextForm(
+                            readOnly: true,
                             maximumLines: 1,
                             labelText: "Select Beneficiary",
                             fillColor: AppColor.white,
@@ -542,35 +533,28 @@ class _SendMoneyState extends State<SendMoney> {
                                     backgroundColor: Colors.transparent,
                                     context: context,
                                     builder: (context) {
-                                      return NoRecord();
+                                      return noRecord();
                                     });
                               },
                             ),
                           ),
                           const TextForm(
+                            readOnly: false,
                             maximumLines: 1,
                             labelText: "Amount",
                             fillColor: AppColor.white,
                             keyboardType: TextInputType.number,
                           ),
                           const TextForm(
+                            readOnly: false,
                             labelText: "Narrative or Reason",
                             fillColor: AppColor.white,
                             maximumLines: 3,
                           ),
-                          const SizedBox(height: 12),
-                          ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColor.blue,
-                                  minimumSize: Size(
-                                      MediaQuery.of(context).size.width, 50)),
-                              child: Text(
-                                'Continue',
-                                style: kBlack2TextStyle.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600),
-                              )),
+                          CustomButton(
+                            label: 'Continue',
+                            onPressed: () {},
+                          ),
                         ],
                       ),
                     ),
@@ -579,6 +563,7 @@ class _SendMoneyState extends State<SendMoney> {
                       child: Column(
                         children: [
                           TextForm(
+                            readOnly: true,
                             maximumLines: 1,
                             labelText: "Select Beneficiary",
                             fillColor: AppColor.white,
@@ -589,35 +574,28 @@ class _SendMoneyState extends State<SendMoney> {
                                     backgroundColor: Colors.transparent,
                                     context: context,
                                     builder: (context) {
-                                      return NoRecord();
+                                      return noRecord();
                                     });
                               },
                             ),
                           ),
                           const TextForm(
+                            readOnly: false,
                             maximumLines: 1,
                             labelText: "Amount",
                             fillColor: AppColor.white,
                             keyboardType: TextInputType.number,
                           ),
                           const TextForm(
+                            readOnly: false,
                             labelText: "Narrative or Reason",
                             fillColor: AppColor.white,
                             maximumLines: 3,
                           ),
-                          const SizedBox(height: 12),
-                          ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColor.blue,
-                                  minimumSize: Size(
-                                      MediaQuery.of(context).size.width, 50)),
-                              child: Text(
-                                'Continue',
-                                style: kBlack2TextStyle.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600),
-                              )),
+                          CustomButton(
+                            label: 'Continue',
+                            onPressed: () {},
+                          )
                         ],
                       ),
                     ),
@@ -631,7 +609,7 @@ class _SendMoneyState extends State<SendMoney> {
     );
   }
 
-  Container NoRecord() {
+  Container noRecord() {
     return Container(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
         height: 250,
@@ -650,7 +628,7 @@ class _SendMoneyState extends State<SendMoney> {
                 width: 50,
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
-                    color: AppColor.greyText),
+                    color: AppColor.grey),
               ),
               const SizedBox(height: 10),
               const Icon(

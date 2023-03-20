@@ -7,10 +7,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:purscliq_app/dashboard.dart';
 
-import '../Homepage/homepage.dart';
+
 import '../shared/textstyles.dart';
-import '../shared/widget/textfield.dart';
+import '../shared/widget/textform.dart';
 import 'login_provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -69,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
 
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const Homepage()),
+        MaterialPageRoute(builder: (context) => const Dashboard()),
       );
     } else if (r.statusCode == 403 || r.statusCode == 404) {
       if (!mounted) return;
@@ -221,23 +222,26 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       TextForm(
+                        readOnly: false,
                         maximumLines: 1,
                         labelText: "User ID",
                         hintText: 'Enter User ID',
                         controller: emailController,
                         validator: (value) {
-                          if (value!.isEmpty || EmailValidator.validate(value))
+                          if (value!.isEmpty || EmailValidator.validate(value)) {
                             null;
-                          // log("Validator is ${EmailValidator.validate(value!)}");
-                          else
+                          } else {
                             return "Please enter a valid email";
-                          log("Validator is ${EmailValidator.validate(value!)}");
+                          }
+                          log("Validator is ${EmailValidator.validate(value)}");
                         },
                         obscureText: false,
                         suffixWidget: const SizedBox.shrink(),
                       ),
                       TextForm(
-                        maximumLines: 1,
+                        
+                        readOnly: false,
+                          maximumLines: 1,
                           labelText: 'Password',
                           hintText: 'Enter Password',
                           controller: passwordController,
@@ -245,11 +249,11 @@ class _LoginPageState extends State<LoginPage> {
                           suffixWidget: const SizedBox.shrink(),
                           validator: (password) {
                             if (password!.isEmpty ||
-                                RegExp(r'(\s)').hasMatch(password))
+                                RegExp(r'(\s)').hasMatch(password)) {
                               return "Please enter a valid password";
-                            else
+                            } else {
                               return null;
-                            log("password validation ${password != null && RegExp(r'(\s)').hasMatch(password)}");
+                            }
                           }),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
