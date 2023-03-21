@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:purscliq_app/Profile/change_cliq_id.dart';
 import 'package:purscliq_app/Profile/change_password.dart';
 import 'package:purscliq_app/Profile/edit_profile.dart';
-// import 'package:purscliq_app/Profile/change_pin.dart';
+import 'package:purscliq_app/Profile/change_pin.dart';
 import 'package:purscliq_app/shared/colors.dart';
 import 'package:purscliq_app/shared/textstyles.dart';
 import 'package:purscliq_app/shared/widget/custom_app_bar.dart';
@@ -43,15 +43,15 @@ class Profile extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                    builder: (context) => const ChangeCliqID()));
+                            builder: (context) => const ChangeCliqID()));
                   }),
               CustomPageLink(
                   text: "Change Pin",
                   onTap: () {
-                     // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    // builder: (context) => const ChangePin()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ChangePin()));
                   }),
             ],
           ),
@@ -82,26 +82,22 @@ class CustomPageLink extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(12),
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: onTap,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      text,
-                      style: kBlack2TextStyle,
-                    ),
-                    const Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: AppColor.grey,
-                      size: 13,
-                    )
-                  ],
+          child: GestureDetector(
+            onTap: onTap,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  text,
+                  style: kBlack2TextStyle,
                 ),
-              ),
-            ],
+                const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: AppColor.grey,
+                  size: 13,
+                )
+              ],
+            ),
           ),
         ),
       ],
