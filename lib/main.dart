@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:purscliq_app/Homepage/homepage_provider.dart';
 import 'package:purscliq_app/Login/login.dart';
 //import 'package:device_preview/device_preview.dart';
+// import 'package:purscliq_app/Profile/change_pin.dart';
 
 import 'package:purscliq_app/Login/login_provider.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // home: ChangePin(),
+      // home:  ChangePin(),
        home: const LoginPage(),
     );
   }
