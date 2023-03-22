@@ -340,12 +340,12 @@ class _HomepageState extends State<Homepage> {
                                         CustomMainIcon(
                                             Icons.wifi_rounded, "Buy Data", 25,
                                             () {
-                                          // Navigator.push(
-                                          //   context,
-                                          //   MaterialPageRoute(
-                                          //       builder: (context) =>
-                                          //           const DataRecharge()),
-                                          // );
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const DataRecharge()),
+                                          );
                                         }),
                                         const SizedBox(height: 8),
                                         CustomMainIcon(Icons.money_rounded,
