@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:purscliq_app/Airtime/airtime.dart';
 import 'package:purscliq_app/Homepage/homepage_provider.dart';
+import 'package:purscliq_app/data_recharge.dart';
 import 'package:purscliq_app/send_money.dart';
 
 import '../service.dart';
@@ -159,15 +160,16 @@ class _HomepageState extends State<Homepage> {
 
             Fdata? sFdata = snapshot.data?.fdata;
             String? firstName = capitalize((snapshot.data?.fdata?.firstName)!);
-            state.UserInformation(
-                firstName,
-                capitalize((sFdata?.lastName)!),
-                (sFdata?.email)!.toLowerCase(),
-                (sFdata?.phone)!,
-                (sFdata?.bankDetails?.bankName),
-                (sFdata?.bankDetails?.accountName),
-                (sFdata?.bankDetails?.accountNumber),
-               (sFdata?. avatarUrl), );
+            state.userInformation(
+              firstName,
+              capitalize((sFdata?.lastName)!),
+              (sFdata?.email)!.toLowerCase(),
+              (sFdata?.phone)!,
+              (sFdata?.bankDetails?.bankName),
+              (sFdata?.bankDetails?.accountName),
+              (sFdata?.bankDetails?.accountNumber),
+              (sFdata?.avatarUrl),
+            );
             log("${snapshot.data}");
             return SafeArea(
               child: Column(
@@ -315,13 +317,12 @@ class _HomepageState extends State<Homepage> {
                               )
                             : Container(
                                 padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
-                                child: Column(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                    Column(
                                       children: [
                                         CustomMainIcon(
                                             FontAwesomeIcons
@@ -335,6 +336,24 @@ class _HomepageState extends State<Homepage> {
                                                     const SendMoney()),
                                           );
                                         }),
+                                        const SizedBox(height: 8),
+                                        CustomMainIcon(
+                                            Icons.wifi_rounded, "Buy Data", 25,
+                                            () {
+                                          // Navigator.push(
+                                          //   context,
+                                          //   MaterialPageRoute(
+                                          //       builder: (context) =>
+                                          //           const DataRecharge()),
+                                          // );
+                                        }),
+                                        const SizedBox(height: 8),
+                                        CustomMainIcon(Icons.money_rounded,
+                                            "Earnings", 25, () {})
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
                                         CustomMainIcon(
                                             Icons.phone_iphone_outlined,
                                             "Buy Airtime",
@@ -346,33 +365,42 @@ class _HomepageState extends State<Homepage> {
                                                     const Airtime()),
                                           );
                                         }),
-                                        CustomMainIcon(Icons.receipt_outlined,
-                                            "Pay Bills", 30, () {}),
-                                        CustomMainIcon(
-                                            Icons.star_border_rounded,
-                                            "Request",
-                                            30,
-                                            () {}),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        CustomMainIcon(Icons.wifi_rounded,
-                                            "Buy Data", 25, () {}),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
                                         CustomMainIcon(Icons.money,
                                             "Quick Loan", 30, () {}),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        CustomMainIcon(Icons.people_outline,
+                                            "Referrals", 25, () {})
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        CustomMainIcon(Icons.receipt_outlined,
+                                            "Pay Bills", 30, () {}),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
                                         CustomMainIcon(
                                             Icons.sports_basketball_outlined,
                                             "Savings",
                                             30,
                                             () {}),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        CustomMainIcon(
+                                            Icons.star_border_rounded,
+                                            "Request",
+                                            30,
+                                            () {}),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
                                         CustomMainIcon(
                                             FontAwesomeIcons.calendarDays,
                                             "Events",
@@ -602,29 +630,29 @@ class CustomMainIcon extends StatelessWidget {
     this.custIcon,
     this.custText,
     this.custSize,
-    this.onPressed, {
+    this.onTap, {
     Key? key,
   }) : super(key: key);
   final IconData? custIcon;
   final String? custText;
   final double? custSize;
-  final void Function()? onPressed;
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Column(
         children: [
           CircleAvatar(
             backgroundColor: Colors.grey.shade200,
             radius: 24.0,
-            child: IconButton(
-              icon: Icon(
+            child: Align(
+              alignment: Alignment.center,
+              child: Icon(
                 custIcon,
                 color: Theme.of(context).primaryColor,
                 size: custSize,
               ),
-              onPressed: onPressed,
             ),
           ),
           const SizedBox(height: 6),

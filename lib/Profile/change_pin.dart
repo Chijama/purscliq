@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:purscliq_app/shared/colors.dart';
 import 'package:purscliq_app/shared/textstyles.dart';
 import 'package:purscliq_app/shared/widget/button.dart';
 import 'package:purscliq_app/shared/widget/custom_app_bar.dart';

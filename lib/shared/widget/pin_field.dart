@@ -29,8 +29,8 @@ class pinField extends StatelessWidget {
               borderRadius: const BorderRadius.all(Radius.circular(4)),
               borderSide: BorderSide(width: 0, color: Colors.grey.shade300),
             ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(4)),
+            focusedBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(4)),
               borderSide: BorderSide(width: 0, color: AppColor.blue),
             ),
             hintStyle: kBlue1TextStyle.copyWith(color: Colors.grey.shade300)),

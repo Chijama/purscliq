@@ -14,6 +14,7 @@ class Airtime extends StatefulWidget {
 
 TextEditingController phoneNumberController = TextEditingController();
 TextEditingController networkProviderController = TextEditingController();
+bool? seeAll = true;
 
 class _AirtimeState extends State<Airtime> {
   @override
@@ -92,6 +93,50 @@ class _AirtimeState extends State<Airtime> {
                   ),
                 ),
                 const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Favourite Beneficiaries",
+                      style: kBlack3TextStyle,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        if (seeAll == true) {
+                          setState(() {
+                            seeAll = false;
+                          });
+                        } else {
+                          setState(() {
+                            seeAll = true;
+                          });
+                        }
+                      },
+                      child: Text(
+                        seeAll == true ? 'See all' : 'Hide',
+                        style: kHeading2TextStyle.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                SizedBox(
+                  height: 56,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: const [
+                      FavBenficiary(),
+                      FavBenficiary(),
+                      FavBenficiary(),
+                      FavBenficiary(),
+                      FavBenficiary(),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10),
                 Text(
                   "Phone Number",
                   style: kBlack3TextStyle,
@@ -101,7 +146,7 @@ class _AirtimeState extends State<Airtime> {
                   child: Row(
                     children: [
                       SizedBox(
-                        width: 267,
+                        width: MediaQuery.of(context).size.width - 130,
                         child: TextField(
                             keyboardType: TextInputType.number,
                             controller: phoneNumberController,
@@ -147,95 +192,24 @@ class _AirtimeState extends State<Airtime> {
                     ],
                   ),
                 ),
-                TextForm(
-                    readOnly: true,
-                    controller: networkProviderController,
-                    //prefixWidget: ,
-                    labelText: "Select Network Provider",
-                    suffixWidget: IconButton(
-                        icon: const Icon(Icons.arrow_drop_down),
-                        onPressed: () {
-                          showModalBottomSheet(
-                              backgroundColor: Colors.transparent,
-                              context: context,
-                              builder: (context) {
-                                return Container(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(16, 8, 16, 0),
-                                  height: 350,
-                                  decoration: BoxDecoration(
-                                      color: AppColor.white,
-                                      border: Border.all(
-                                          color: Colors.grey.shade300),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(10),
-                                        topRight: Radius.circular(10),
-                                      )),
-                                  child: Column(children: [
-                                    Container(
-                                      height: 3,
-                                      width: 50,
-                                      decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10)),
-                                          color: AppColor.grey),
-                                    ),
-                                    ListView(
-                                      scrollDirection: Axis.vertical,
-                                      shrinkWrap: true,
-                                      children: [
-                                        buildItem(logoLinkT[0],
-                                            serviceProviderText[0]),
-                                        buildItem(logoLinkT[1],
-                                            serviceProviderText[1]),
-                                        buildItem(logoLinkT[2],
-                                            serviceProviderText[2]),
-                                        buildItem(logoLinkT[3],
-                                            serviceProviderText[3]),
-                                      ],
-                                    ),
-                                  ]),
-                                );
-                              });
-                        })),
-                // Text(
-                //   "Select Network Provider",
-                //   style: kBlack3TextStyle,
-                // ),
-
-                // Padding(
-                //   padding: const EdgeInsets.fromLTRB(0, 4, 0, 12),
-                //   child: DropdownButtonHideUnderline(
-                //       child: DropdownButton2(
-                //           dropdownStyleData: const DropdownStyleData(
-                //             maxHeight: 200,
-                //           ),
-                //           menuItemStyleData: const MenuItemStyleData(
-                //             height: 40,
-                //           ),
-                //           buttonStyleData: ButtonStyleData(
-                //               width: MediaQuery.of(context).size.width,
-                //               height: 50,
-                //               padding: EdgeInsets.symmetric(
-                //                   horizontal: 10, vertical: 8),
-                //               decoration: BoxDecoration(
-                //                   color: AppColor.white,
-                //                   borderRadius: const BorderRadius.all(
-                //                       Radius.circular(4)),
-                //                   border: Border.all(
-                //                       width: 0, color: Colors.grey.shade300))),
-                //           items: []
-                //           //serviceProviderItems.Items.map((e) => DropdownMenuItem<serviceProviderItem>(child: serviceProviderItems.buildItem(e),value: e,)),
-                //           )),
-                // ),
+                Text(
+                  "Select Network Provider",
+                  style: kBlack3TextStyle,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    networkProvider(() {}, "assets/icons/mtn.png"),
+                    networkProvider(() {}, "assets/icons/9mobile.png"),
+                    networkProvider(() {}, "assets/icons/airtel.png"),
+                    networkProvider(() {}, "assets/icons/glo.png"),
+                  ],
+                ),
                 const TextForm(
                   readOnly: false,
                   labelText: "Amount",
                   hintText: "₦ Amount",
                   fillColor: AppColor.white,
-                ),
-                const SizedBox(
-                  height: 70,
                 ),
                 ElevatedButton(
                     onPressed: () {},
@@ -256,44 +230,70 @@ class _AirtimeState extends State<Airtime> {
     );
   }
 
-  List<String> serviceProviderText = [
-    "MTN Airtime VTU",
-    "9mobile Airtime VTU",
-    "Airtel Airtime VTU",
-    "Glo Airtime VTU"
-  ];
-  List<String> logoLinkT = [
-    "assets/icons/mtn.png",
-    "assets/icons/9mobile.png",
-    "assets/icons/airtel.png",
-    "assets/icons/glo.png"
-  ];
-
-  Widget buildItem(String logolink, String serviceProvider) => GestureDetector(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          margin: const EdgeInsets.symmetric(vertical: 8),
-          height: 50,
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              color: AppColor.lightgrey),
-          child: Row(
-            children: [
-              Image(
-                  colorBlendMode: BlendMode.clear,
-                  height: 28,
-                  width: 28,
-                  image: AssetImage(logolink)),
-              const SizedBox(width: 20),
-              Text(serviceProvider),
-            ],
-          ),
+  Container networkProvider(VoidCallback onPressed, String image) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 8),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColor.lightgreen,
+          minimumSize: Size(90, 90),
+          elevation: 1,
         ),
-        onTap: () {
-          setState(() {
-            Navigator.of(context).pop();
-            networkProviderController.text = serviceProvider;
-          });
-        },
-      );
+        onPressed: onPressed,
+        child: Image.asset(
+          image,
+          // height: 73,
+          // width: 73,
+        ),
+      ),
+    );
+  }
+}
+
+class FavBenficiary extends StatelessWidget {
+  const FavBenficiary({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 138,
+      height: 56,
+      margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+      decoration: const BoxDecoration(
+        color: AppColor.lightgrey,
+        borderRadius: BorderRadius.all(Radius.circular(56)),
+      ),
+      padding: const EdgeInsets.fromLTRB(0, 12, 8, 12),
+      child: Row(
+        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          CircleAvatar(
+            minRadius: 30,
+            backgroundColor: AppColor.neutralColor.shade50,
+            child: Icon(
+              Icons.phone_iphone_rounded,
+              size: 25,
+              color: AppColor.neutralColor.shade100,
+            ),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                'Jide Balogun',
+                style: kBlack3TextStyle.copyWith(fontSize: 10),
+              ),
+              //const SizedBox(height: 8),
+              Text(
+                '08012345678',
+                style: kBlack2TextStyle.copyWith(fontSize: 10),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
 }

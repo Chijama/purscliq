@@ -12,7 +12,7 @@ class HomepageProvider extends ChangeNotifier {
   String? accName;
   String? imgUrl;
 
-  void UserInformation(
+  void userInformation(
       String? provFirstName,
       String? provLastName,
       String? provEmail,
@@ -28,7 +28,7 @@ class HomepageProvider extends ChangeNotifier {
     bankName = provBankName;
     accNumber = provAccNumber;
     accName = provAccNmae;
-    imgUrl = provImgUrl ;
+    imgUrl = provImgUrl;
     log(' this is $firstName, $bankName, $imgUrl');
     notifyListeners();
   }
